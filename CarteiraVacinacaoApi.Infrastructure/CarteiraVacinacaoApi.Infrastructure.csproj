@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarteiraVacinacaoApi.Application\CarteiraVacinacaoApi.Application.csproj" />
+    <ProjectReference Include="..\CarteiraVacinacaoApi.Domain\CarteiraVacinacaoApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
