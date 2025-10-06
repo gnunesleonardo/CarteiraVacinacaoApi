@@ -1,4 +1,5 @@
-﻿using CarteiraVacinacaoApi.Application.Interfaces;
+﻿using CarteiraVacinacaoApi.Application.DTOs;
+using CarteiraVacinacaoApi.Application.Interfaces;
 using CarteiraVacinacaoApi.Domain.Entities;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarteiraVacinacaoApi.Application.Queries.GetAllVaccines
 {
-    public class GetAllVaccinesHandler : IRequestHandler<GetAllVaccineQuery, List<Vaccine>>
+    public class GetAllVaccinesHandler : IRequestHandler<GetAllVaccineQuery, List<VaccineDto>>
     {
         private readonly IVaccineCacheService _vaccineCache;
 
@@ -18,9 +19,18 @@ namespace CarteiraVacinacaoApi.Application.Queries.GetAllVaccines
             _vaccineCache = vaccineCache;
         }
 
-        public async Task<List<Vaccine>> Handle(GetAllVaccineQuery request, CancellationToken cancellationToken)
+        public async Task<List<VaccineDto>> Handle(GetAllVaccineQuery request, CancellationToken cancellationToken)
         {
-            return await _vaccineCache.GetAllAsync();
+            List<VaccineDto> vaccineDtos = new();
+            var vaccines = await _vaccineCache.GetAllAsync();
+
+            vaccineDtos = vaccines.Select(v => new VaccineDto { 
+                VaccineId = v.Id, 
+                VaccineName = v.Name, 
+                DosesRequired = v.DosesRequired 
+            }).ToList();
+
+            return vaccineDtos;
         }
     }
 }
