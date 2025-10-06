@@ -28,6 +28,8 @@ namespace CarteiraVacinacaoApi.Infrastructure
 
             #region REPOSITORIES
             services.AddScoped<IVaccineRepository, VaccineRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IVaccineRecordRepository, VaccineRecordRepository>();
             #endregion
 
             return services;
