@@ -26,8 +26,10 @@ namespace CarteiraVacinacaoApi.Application.Behaviors
             {
                 var context = new ValidationContext<TRequest>(request);
 
-                var failures = _validators
-                    .Select(v => v.Validate(context))
+                var validationFailures = await Task.WhenAll(
+                    _validators.Select(validator => validator.ValidateAsync(context)));
+
+                var failures = validationFailures
                     .SelectMany(r => r.Errors)
                     .Where(f => f != null)
                     .ToList();
