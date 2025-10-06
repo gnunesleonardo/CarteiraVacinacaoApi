@@ -1,4 +1,7 @@
-﻿using CarteiraVacinacaoApi.Infrastructure.Persistence;
+﻿using CarteiraVacinacaoApi.Application.Interfaces;
+using CarteiraVacinacaoApi.Infrastructure.Caching;
+using CarteiraVacinacaoApi.Infrastructure.Persistence;
+using CarteiraVacinacaoApi.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +17,18 @@ namespace CarteiraVacinacaoApi.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            #region DATABASE
             services.AddDbContext<VaccineRecordDbContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+            #endregion
+
+            #region CACHING
+            services.AddScoped<IVaccineCacheService, VaccineCacheService>();
+            #endregion
+
+            #region REPOSITORIES
+            services.AddScoped<IVaccineRepository, VaccineRepository>();
+            #endregion
 
             return services;
         }

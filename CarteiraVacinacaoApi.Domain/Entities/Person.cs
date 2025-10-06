@@ -10,10 +10,14 @@ namespace CarteiraVacinacaoApi.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
         public IEnumerable<VaccineRecord> VaccineRecords { get; set; }
 
-        protected Person() { }
+        public Person() { }
+
+        public Person(int id)
+        {
+            Id = id;
+        }
 
         public Person(string name)
         {

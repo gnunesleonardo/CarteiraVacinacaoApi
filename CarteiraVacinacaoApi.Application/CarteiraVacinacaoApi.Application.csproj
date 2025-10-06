@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarteiraVacinacaoApi.Domain\CarteiraVacinacaoApi.Domain.csproj" />
-    <ProjectReference Include="..\CarteiraVacinacaoApi.Infrastructure\CarteiraVacinacaoApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

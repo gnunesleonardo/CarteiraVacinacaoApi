@@ -11,17 +11,17 @@ namespace CarteiraVacinacaoApi.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? DosesRequired { get; set; }
+        public int DosesRequired { get; set; }
 
-        protected Vaccine() { }
+        public Vaccine() { }
 
-        public Vaccine(string name, int requiredDoses)
+        public Vaccine(string name, int dosesRequired)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Nome da vacina é obrigatório.");
 
             Name = name;
-            DosesRequired = requiredDoses;
+            DosesRequired = dosesRequired;
         }
     }
 }

@@ -1,8 +1,8 @@
-using FluentValidation;
+using CarteiraVacinacaoApi.Api.Middlewares;
 using CarteiraVacinacaoApi.Application;
 using CarteiraVacinacaoApi.Application.Behaviors;
 using CarteiraVacinacaoApi.Infrastructure;
-using CarteiraVacinacaoApi.Api.Middlewares;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,8 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

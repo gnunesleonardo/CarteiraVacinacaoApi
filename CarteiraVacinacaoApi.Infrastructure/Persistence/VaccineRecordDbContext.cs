@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CarteiraVacinacaoApi.Infrastructure.Persistence
 {
@@ -12,7 +13,7 @@ namespace CarteiraVacinacaoApi.Infrastructure.Persistence
     {
         public DbSet<Vaccine> Vaccines { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<VaccineRecord> VacinneRecords { get; set; }
+        public DbSet<VaccineRecord> VaccineRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,7 +27,7 @@ namespace CarteiraVacinacaoApi.Infrastructure.Persistence
                 vaccineEntity.Property(v => v.Id).ValueGeneratedOnAdd();
 
                 vaccineEntity.Property(v => v.Name).IsRequired().HasMaxLength(128);
-                vaccineEntity.Property(v => v.DosesRequired).HasDefaultValue(null);
+                vaccineEntity.Property(v => v.DosesRequired).IsRequired();
             });
 
             modelBuilder.Entity<Person>(personEntity =>
@@ -54,6 +55,25 @@ namespace CarteiraVacinacaoApi.Infrastructure.Persistence
                     .WithMany(p => p.VaccineRecords)
                     .HasForeignKey(vc => vc.PersonId);
             });
+
+            modelBuilder.Entity<Vaccine>().HasData(
+                new Vaccine { Id = 1, Name = "Covid-19", DosesRequired = 2 },
+                new Vaccine { Id = 2, Name = "Febre Amarela", DosesRequired = 2 },
+                new Vaccine { Id = 3, Name = "Gripe 2025", DosesRequired = 1 }
+            );
+
+            modelBuilder.Entity<Person>().HasData(
+                new Person { Id = 1, Name = "Leonardo Gomes" },
+                new Person { Id = 2, Name = "Larissa Vancini" }
+            );
+
+            modelBuilder.Entity<VaccineRecord>().HasData(
+                new VaccineRecord { Id = 1, PersonId = 1, VaccineId = 1, DoseNumber = 1, AppliedDate = new DateTime(2025, 02, 05) },
+                new VaccineRecord { Id = 2, PersonId = 1, VaccineId = 1, DoseNumber = 2, AppliedDate = new DateTime(2025, 08, 05) },
+                new VaccineRecord { Id = 3, PersonId = 2, VaccineId = 1, DoseNumber = 1, AppliedDate = new DateTime(2025, 02, 05) },
+                new VaccineRecord { Id = 4, PersonId = 2, VaccineId = 1, DoseNumber = 2, AppliedDate = new DateTime(2025, 08, 05) },
+                new VaccineRecord { Id = 5, PersonId = 1, VaccineId = 3, DoseNumber = 1, AppliedDate = new DateTime(2025, 08, 05) }
+            );
         }
     }
 }

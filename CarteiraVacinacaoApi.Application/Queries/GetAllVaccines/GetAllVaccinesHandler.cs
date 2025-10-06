@@ -1,7 +1,6 @@
-﻿using CarteiraVacinacaoApi.Domain.Entities;
-using CarteiraVacinacaoApi.Infrastructure.Persistence;
+﻿using CarteiraVacinacaoApi.Application.Interfaces;
+using CarteiraVacinacaoApi.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +11,16 @@ namespace CarteiraVacinacaoApi.Application.Queries.GetAllVaccines
 {
     public class GetAllVaccinesHandler : IRequestHandler<GetAllVaccineQuery, List<Vaccine>>
     {
-        private readonly VaccineRecordDbContext _dbContext;
+        private readonly IVaccineCacheService _vaccineCache;
 
-        public GetAllVaccinesHandler(VaccineRecordDbContext dbContext)
+        public GetAllVaccinesHandler(IVaccineCacheService vaccineCache)
         {
-            _dbContext = dbContext;
+            _vaccineCache = vaccineCache;
         }
 
         public async Task<List<Vaccine>> Handle(GetAllVaccineQuery request, CancellationToken cancellationToken)
         {
-            var vaccines = await _dbContext.Vaccines.AsNoTracking().ToListAsync(cancellationToken);
-
-            return vaccines;
+            return await _vaccineCache.GetAllAsync();
         }
     }
 }

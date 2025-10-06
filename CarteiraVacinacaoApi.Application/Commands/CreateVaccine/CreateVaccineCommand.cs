@@ -1,4 +1,5 @@
-﻿using CarteiraVacinacaoApi.Domain.Entities;
+﻿using CarteiraVacinacaoApi.Application.DTOs;
+using CarteiraVacinacaoApi.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace CarteiraVacinacaoApi.Application.Commands.CreateVaccine
 {
-    public record CreateVaccineCommand(string Name, int DosesRequired) : IRequest<Vaccine>;
+    public record CreateVaccineCommand(string VaccineName, int DosesRequired) : IRequest<VaccineDto>;
 }

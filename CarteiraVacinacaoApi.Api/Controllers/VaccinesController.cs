@@ -7,11 +7,11 @@ namespace CarteiraVacinacaoApi.Api.Controllers
 {
     [ApiController]
     [Route("api/vaccines")]
-    public class VaccineController : ControllerBase
+    public class VaccinesController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public VaccineController(IMediator mediator)
+        public VaccinesController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,7 +27,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         public async Task<IActionResult> CreateVaccine([FromBody]CreateVaccineCommand command)
         {
             var result = await _mediator.Send(command);
-            return Created();
+            return CreatedAtAction(nameof(CreateVaccine), result);
         }
     }
 }

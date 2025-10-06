@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarteiraVacinacaoApi.Application\CarteiraVacinacaoApi.Application.csproj" />
     <ProjectReference Include="..\CarteiraVacinacaoApi.Domain\CarteiraVacinacaoApi.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

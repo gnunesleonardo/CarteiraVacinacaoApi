@@ -1,5 +1,6 @@
-﻿using CarteiraVacinacaoApi.Domain.Entities;
-using CarteiraVacinacaoApi.Infrastructure.Persistence;
+﻿using CarteiraVacinacaoApi.Application.DTOs;
+using CarteiraVacinacaoApi.Application.Interfaces;
+using CarteiraVacinacaoApi.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,25 @@ using System.Threading.Tasks;
 
 namespace CarteiraVacinacaoApi.Application.Commands.CreateVaccine
 {
-    public class CreateVaccineHandler : IRequestHandler<CreateVaccineCommand, Vaccine>
+    public class CreateVaccineHandler : IRequestHandler<CreateVaccineCommand, VaccineDto>
     {
-        private readonly VaccineRecordDbContext _dbContext;
+        private readonly IVaccineRepository _vaccineRepository;
 
-        public CreateVaccineHandler(VaccineRecordDbContext dbContext)
+        public CreateVaccineHandler(IVaccineRepository vaccineRepository)
         {
-            _dbContext = dbContext;
+            _vaccineRepository = vaccineRepository;
         }
 
-        public async Task<Vaccine> Handle(CreateVaccineCommand request, CancellationToken cancellationToken)
+        public async Task<VaccineDto> Handle(CreateVaccineCommand request, CancellationToken cancellationToken)
         {
-            var vaccine = new Vaccine(request.Name, request.DosesRequired);
+            var vaccine = await _vaccineRepository.AddAsync(new Vaccine(request.VaccineName, request.DosesRequired));
 
-            _dbContext.Vaccines.Add(vaccine);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return vaccine;
+            return new VaccineDto
+            {
+                VaccineId = vaccine.Id,
+                VaccineName = vaccine.Name,
+                DosesRequired = vaccine.DosesRequired
+            };
         }
     }
 }

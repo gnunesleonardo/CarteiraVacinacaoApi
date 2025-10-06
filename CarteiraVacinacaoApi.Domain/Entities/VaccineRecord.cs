@@ -18,7 +18,7 @@ namespace CarteiraVacinacaoApi.Domain.Entities
         public Person Person { get; set; }
         public Vaccine Vaccine { get; set; }
 
-        protected VaccineRecord() { }
+        public VaccineRecord() { }
 
         public VaccineRecord(int personId, int vaccineId, int doseNumber, DateTime appliedDate)
         {
