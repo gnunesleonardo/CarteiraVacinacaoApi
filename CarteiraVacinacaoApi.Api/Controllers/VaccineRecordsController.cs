@@ -2,6 +2,7 @@
 using CarteiraVacinacaoApi.Application.Commands.DeleteVaccineRecord;
 using CarteiraVacinacaoApi.Application.Queries.GetVaccinationCard;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarteiraVacinacaoApi.Api.Controllers
@@ -18,6 +19,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateVaccineRecord([FromBody] CreateVaccineRecordCommand command)
         {
             var result = await _mediator.Send(command);
@@ -25,6 +27,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("card/{personId}")]
         public async Task<IActionResult> GetVaccinationCard([FromRoute] int personId)
         {
@@ -34,6 +37,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> DeleteVaccineRecord([FromRoute] int id)
         {

@@ -1,6 +1,7 @@
 ﻿using CarteiraVacinacaoApi.Application.Commands.CreatePerson;
 using CarteiraVacinacaoApi.Application.Commands.DeletePerson;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarteiraVacinacaoApi.Api.Controllers
@@ -17,6 +18,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreatePerson([FromBody] CreatePersonCommand command)
         {
             var result = await _mediator.Send(command);
@@ -24,6 +26,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> DeletePerson([FromRoute] int id)
         {

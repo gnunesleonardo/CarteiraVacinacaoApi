@@ -1,4 +1,5 @@
 ﻿using CarteiraVacinacaoApi.Application.Interfaces;
+using CarteiraVacinacaoApi.Infrastructure.Auth;
 using CarteiraVacinacaoApi.Infrastructure.Caching;
 using CarteiraVacinacaoApi.Infrastructure.Persistence;
 using CarteiraVacinacaoApi.Infrastructure.Repositories;
@@ -30,6 +31,11 @@ namespace CarteiraVacinacaoApi.Infrastructure
             services.AddScoped<IVaccineRepository, VaccineRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IVaccineRecordRepository, VaccineRecordRepository>();
+            #endregion
+
+            #region AUTH
+            services.AddScoped<IJwtProvider, JwtProvider>();
+            services.AddScoped<IAdminCredentialsValidator, AdminCredentialsValidator>();
             #endregion
 
             return services;

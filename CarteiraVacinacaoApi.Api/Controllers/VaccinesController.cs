@@ -1,6 +1,7 @@
 ﻿using CarteiraVacinacaoApi.Application.Commands.CreateVaccine;
 using CarteiraVacinacaoApi.Application.Queries.GetAllVaccines;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarteiraVacinacaoApi.Api.Controllers
@@ -17,6 +18,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllVaccines()
         {
             var result = await _mediator.Send(new GetAllVaccineQuery());
@@ -24,6 +26,7 @@ namespace CarteiraVacinacaoApi.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateVaccine([FromBody]CreateVaccineCommand command)
         {
             var result = await _mediator.Send(command);

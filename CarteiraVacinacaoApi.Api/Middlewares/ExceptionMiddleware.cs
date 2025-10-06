@@ -62,6 +62,15 @@ namespace CarteiraVacinacaoApi.Api.Middlewares
                     argumentException.Message,
                 };
             }
+            else if (exception is UnauthorizedAccessException unauthorizedException)
+            {
+                statusCode = HttpStatusCode.Unauthorized;
+                response = new
+                {
+                    StatusCode = (int)statusCode,
+                    unauthorizedException.Message,
+                };
+            }
             else
             {
                 statusCode = HttpStatusCode.InternalServerError;
