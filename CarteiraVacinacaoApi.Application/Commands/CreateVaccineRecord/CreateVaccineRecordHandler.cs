@@ -43,13 +43,17 @@ namespace CarteiraVacinacaoApi.Application.Commands.CreateVaccineRecord
             if (person == null)
                 throw new KeyNotFoundException("Pessoa não encontrada.");
 
-            var isDoseNumberValid = await _vaccineRecordRepository.IsDoseNumberValid(
+            var doseNumberAlreadyExists = await _vaccineRecordRepository.DoseNumberAlreadyExists(
                 request.PersonId, 
                 request.VaccineId,
                 request.DoseNumber);
             
-            if (!isDoseNumberValid)
+            if (doseNumberAlreadyExists)
                 throw new ArgumentException("Número de dose já cadastrado.");
+
+            var lastDoseNumber = await _vaccineRecordRepository.GetLastDoseApplied(person.Id, vaccine.Id);
+            if (request.DoseNumber != (lastDoseNumber + 1))
+                throw new ArgumentException("Número de dose inválido.");
 
             var vaccineRecord = await _vaccineRecordRepository.AddAsync(requestData);
 

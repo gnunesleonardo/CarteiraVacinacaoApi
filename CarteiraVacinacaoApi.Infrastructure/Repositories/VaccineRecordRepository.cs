@@ -34,7 +34,7 @@ namespace CarteiraVacinacaoApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(vr => vr.Id == vaccineRecordId);
         }
 
-        public async Task<bool> IsDoseNumberValid(int personId, int vaccineId, int doseNumber)
+        public async Task<bool> DoseNumberAlreadyExists(int personId, int vaccineId, int doseNumber)
         {
             var record = await _dbContext.VaccineRecords
                 .FirstOrDefaultAsync(vr => vr.PersonId == personId && vr.VaccineId == vaccineId && vr.DoseNumber == doseNumber);

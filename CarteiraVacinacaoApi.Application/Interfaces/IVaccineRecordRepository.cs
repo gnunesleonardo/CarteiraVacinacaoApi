@@ -11,7 +11,7 @@ namespace CarteiraVacinacaoApi.Application.Interfaces
     {
         Task<VaccineRecord> AddAsync(VaccineRecord vaccineRecord);
         Task<VaccineRecord> GetById(int vaccineRecordId);
-        Task<bool> IsDoseNumberValid(int personId, int vaccineId, int doseNumber);
+        Task<bool> DoseNumberAlreadyExists(int personId, int vaccineId, int doseNumber);
         Task<int> GetLastDoseApplied(int personId, int vaccineId);
         Task Remove(VaccineRecord vaccineRecord);
     }
